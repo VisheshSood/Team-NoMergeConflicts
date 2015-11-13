@@ -1,12 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
-        <title>No Merge Conflicts</title>
+
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+        <title>Sign-Up Service</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+        <script src="js/app.js"></script>
+
+        <link rel="stylesheet" href="css/main.css">
     </head>
-    <body>
-        <h1>Hello team!</h1>
+
+    <body ng-app="validationApp">
+        <div class="container">
+        	<div class="page-header">
+		        <h1>Sign Up!</h1>
+		        <p>Our service is fun and awesome, but you must be 13 years old to join.</p>
+	   		</div>
+
+		    <form id="submit">
+		        <div class="form-group">
+		            <label for="email">Email:</label>
+		            <input type="text" class="form-control" id="email" placeholder="email address"/>
+		        </div>
+		    </form>
+		</div>
     </body>
 </html>
