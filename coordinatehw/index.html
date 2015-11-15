@@ -7,8 +7,10 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
         <title>Sign-Up Service</title>
+        <!-- include bootstrap as a link so we can get the integrity hash -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 
         <script src="js/app.js"></script>
 
@@ -22,21 +24,26 @@
                 <p>Our service is fun and awesome, but you must be 13 years old to join.</p>
             </div>
 
-            <form id="submit" novalidate>
+            <form id="submit" name="submit" novalidate>
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="text" class="form-control" id="email" placeholder="email address"/>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" ng-model="password" placeholder="Your password" required>
-                    <p class="validation-error" ng-if="submit.passwordConfirm.$error.required && submit.passwordConfirm.$dirty">Password is required</p>
+                    <label for="passwordInput">Password:</label>
+                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" ng-model="signup.password" placeholder="Your password" required>
+                    <p class="validation-error" ng-if="submit.passwordInput.$error.required && submit.passwordInput.$dirty">Password is required</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{passwordStrength.replace('%','')}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width: passwordStrength}" ng-class="getStrengthWord()">
+                            {{strengthWord}}
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="passwordConfirm">Confirm password:</label>
-                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" required>
-                    <p class="validation-error" ng-if="submit.passwordConfirm.$error.required && submit.passwordConfirm.$dirty">Must confirm your password</p>
-                    <p class="validation-error" ng-if="submit.passwordConfirm.$error">Passwords must match exactly</p>
+                    <label for="passwordConfirmInput">Confirm password:</label>
+                    <input type="password" class="form-control" id="passwordConfirmInput" name="passwordConfirmInput" ng-model="signup.confirmPassword" placeholder="Confirm Password" compare-to="signup.password" required>
+                    <p class="validation-error" ng-if="submit.passwordConfirmInput.$error.required && submit.passwordConfirmInput.$dirty">Must confirm your password</p>
+                    <p class="validation-error" ng-if="submit.passwordConfirmInput.$error.compareTo && submit.passwordConfirmInput.$dirty">Passwords must match exactly</p>
                 </div>
             </form>
         </div>
