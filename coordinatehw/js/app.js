@@ -1,4 +1,4 @@
-angular.module("signup", [])
+angular.module("validationApp", [])
     .controller("signupForm", function($scope){
 
     });
