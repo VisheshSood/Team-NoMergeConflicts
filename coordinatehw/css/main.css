@@ -4,3 +4,5 @@
 body { font-family: Helvetica, sans-serif; font-size: 16px; }
 
 h1, h2 { font-weight: 300; }
+
+.validation-error { color: #de3333; font-weight: 300; }

@@ -22,7 +22,7 @@
                 <p>Our service is fun and awesome, but you must be 13 years old to join.</p>
             </div>
 
-            <form id="submit">
+            <form id="submit" novalidate>
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="text" class="form-control" id="email" placeholder="email address"/>
@@ -30,10 +30,13 @@
                 <div class="form-group">
                     <label for="password">Password:</label>
                     <input type="password" class="form-control" id="password" name="password" ng-model="password" placeholder="Your password" required>
+                    <p class="validation-error" ng-if="submit.passwordConfirm.$error.required && submit.passwordConfirm.$dirty">Password is required</p>
                 </div>
                 <div class="form-group">
                     <label for="passwordConfirm">Confirm password:</label>
                     <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" required>
+                    <p class="validation-error" ng-if="submit.passwordConfirm.$error.required && submit.passwordConfirm.$dirty">Must confirm your password</p>
+                    <p class="validation-error" ng-if="submit.passwordConfirm.$error">Passwords must match exactly</p>
                 </div>
             </form>
         </div>

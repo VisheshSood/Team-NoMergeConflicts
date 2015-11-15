@@ -2,11 +2,18 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
+$error-color: #de3333;
+
 body {
     font-family: Helvetica, sans-serif;
     font-size: 16px;
 }
 
 h1, h2 {
+    font-weight: 300;
+}
+
+.validation-error {
+    color: $error-color;
     font-weight: 300;
 }
