@@ -31,13 +31,13 @@
                 </div>
                 <div class="form-group">
                     <label for="passwordInput">Password:</label>
-                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" ng-model="signup.password" placeholder="Your password" required>
-                    <p class="validation-error" ng-if="submit.passwordInput.$error.required && submit.passwordInput.$dirty">Password is required</p>
+                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" ng-model="signup.password" placeholder="Your password" ng-change="getStrength()" required>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{passwordStrength.replace('%','')}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width: passwordStrength}" ng-class="getStrengthWord()">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="passwordStrength" aria-valuemin="0" aria-valuemax="100" ng-style="{width: passwordStrength + '%'}" ng-class="strengthClass">
                             {{strengthWord}}
                         </div>
                     </div>
+                    <p class="validation-error" ng-if="submit.passwordInput.$error.required && submit.passwordInput.$dirty">Password is required</p>
                 </div>
                 <div class="form-group">
                     <label for="passwordConfirmInput">Confirm password:</label>
