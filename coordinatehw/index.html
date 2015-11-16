@@ -22,18 +22,23 @@
                 <p>Our service is fun and awesome, but you must be 13 years old to join.</p>
             </div>
 
-            <form novalidate id="submit">
+            <form novalidate id="submit" name="submit">
                 <div class="form-group">
-                    <label for="first-name">First Name:</label>
-                    <input type="text" class="form-control" id="first-name" placeholder="first name" ng-model="user.first_name"/>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName"
+                           placeholder="first name" ng-model="user.first_name"/>
                 </div>
                 <div class="form-group">
-                    <label for="last-name">Last Name:</label>
-                    <input type="text" class="form-control" id="last-name" placeholder="last name" ng-model="user.last_name"/>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="last name"
+                           ng-model="user.last_name" required/>
+                    <p class="validation-error" ng-if="submit.lastName.$error.required && submit.lastName.$dirty">
+                        Last name is required</p>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="text" class="form-control" id="email" placeholder="email address" ng-model="user.email"/>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="email address"
+                           ng-model="user.email" required/>
                 </div>
                 <div id="resetButton" class="form-group">
                     <button ng-click="resetForm();" class="btn btn-default">
@@ -44,6 +49,7 @@
                     </button>
                 </div>
                 <div class="alert alert-success" ng-show="formSuccess" role="alert">Your sign up was successful!</div>
+
             </form>
         </div>
     </body>
