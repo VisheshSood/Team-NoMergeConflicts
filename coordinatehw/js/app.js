@@ -19,30 +19,14 @@ angular.module("validationApp", [])
     .controller("signupForm", function($scope){
         $scope.passwordStrength = "0";
         $scope.strengthClass = "progress-bar-danger";
-        $scope.strengthWord = "weak";
+        $scope.strengthWord = "Weak";
 
-        $scope.getStrengthWord = function(str){
-            if(str < 25){
-                $scope.strengthWord = "Weak";
-                $scope.strengthClass = "progress-bar-danger"
-            }
-            else if(str < 50){
-                $scope.strengthWord = "Okay";
-                $scope.strengthClass = "progress-bar-warning"
-            }
-            else if(str < 75){
-                $scope.strengthWord = "Strong";
-                $scope.strengthClass = "progress-bar-info"
-            }
-            else {
-                $scope.strengthWord = "Really Strong!";
-                $scope.strengthClass = "progress-bar-success"
-            }
-        };
         $scope.getStrength = function(){
-            if($scope.signup && $scope.signup.password.length > 0){
+            var strength = 0;
+            if($scope.signup && $scope.signup.password && $scope.signup.password.length > 0){
                 var variety = [0,0,0,0];
                 var index = 0;
+                /* get the variety of the password */
                 for(index; index < $scope.signup.password.length; index++){
                     var currentChar = $scope.signup.password.charAt(index);
                     if(containsSpecial(currentChar)){
@@ -58,25 +42,42 @@ angular.module("validationApp", [])
                         variety[0]++;
                     }
                 }
-                console.log(variety);
                 index = 0;
                 var everything = 0;
+                /* get the unique variety */
                 for(index; index < variety.length; index++){
                     if(variety[index] > 0){
                         everything++;
                     }
                 }
-                var multiplier = 5;
+                var multiplier = 8;
+                var varietyMultipler = 100.0 / variety.length;
                 /* limit to the variety of the password */
-                var strength = Math.min(everything * 25, $scope.signup.password.length * multiplier);
-                console.log($scope.signup.password);
-                console.log(strength);
-                $scope.getStrengthWord(strength);
-                $scope.passwordStrength = strength;
+                strength = Math.min(everything * varietyMultipler, $scope.signup.password.length * multiplier);
             }
+            $scope.passwordStrength = strength;
+            getStrengthWord(strength);
         };
+        function getStrengthWord(str){
+            if(str <= 25){
+                $scope.strengthWord = "Weak";
+                $scope.strengthClass = "progress-bar-danger"
+            }
+            else if(str <= 50){
+                $scope.strengthWord = "Okay";
+                $scope.strengthClass = "progress-bar-warning"
+            }
+            else if(str <= 75){
+                $scope.strengthWord = "Strong";
+                $scope.strengthClass = "progress-bar-info"
+            }
+            else {
+                $scope.strengthWord = "Really Strong!";
+                $scope.strengthClass = "progress-bar-success"
+            }
+        }
         function containsSpecial(str){
-            return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+            return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?\@]/g.test(str);
         }
         function containsNumber(str){
             return /[0123456789]/g.test(str);

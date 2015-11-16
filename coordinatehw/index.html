@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="passwordInput">Password:</label>
-                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" ng-model="signup.password" placeholder="Your password" ng-change="getStrength()" required>
+                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" ng-model="signup.password" placeholder="Your password" ng-change="getStrength()" ng-style="" required>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="passwordStrength" aria-valuemin="0" aria-valuemax="100" ng-style="{width: passwordStrength + '%'}" ng-class="strengthClass">
                             {{strengthWord}}
@@ -43,7 +43,7 @@
                     <label for="passwordConfirmInput">Confirm password:</label>
                     <input type="password" class="form-control" id="passwordConfirmInput" name="passwordConfirmInput" ng-model="signup.confirmPassword" placeholder="Confirm Password" compare-to="signup.password" required>
                     <p class="validation-error" ng-if="submit.passwordConfirmInput.$error.required && submit.passwordConfirmInput.$dirty">Must confirm your password</p>
-                    <p class="validation-error" ng-if="submit.passwordConfirmInput.$error.compareTo && submit.passwordConfirmInput.$dirty">Passwords must match exactly</p>
+                    <p class="validation-error" ng-if="submit.passwordConfirmInput.$error.compareTo && submit.passwordConfirmInput.$dirty && submit.passwordConfirmInput">Passwords must match exactly</p>
                 </div>
             </form>
         </div>
