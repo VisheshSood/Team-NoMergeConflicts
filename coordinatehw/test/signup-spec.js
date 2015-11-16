@@ -6,6 +6,6 @@ describe("the signup page", function(){
     });
 
     it('must clear all input boxes', function() {
-        expect()
+        expect(element(by.id("resetButton"))).toEqual("");
     })
 });
