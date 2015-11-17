@@ -99,7 +99,7 @@ describe("the signup page", function () {
     /* Tests related to the birthday field */
     
     it("should require a birthdate", function() {
-        var error = element(by.cssContainingText(".validation-error", "Please enter your birthdate in the correct format (mm-dd-yyyy)"));
+        var error = element(by.cssContainingText(".validation-error", "You are not old enough to join! Try again later"));
         expect(error.isPresent()).toEqual(false);
         birthdateInput.sendKeys("08-28-1995");
         birthdateInput.clear();
