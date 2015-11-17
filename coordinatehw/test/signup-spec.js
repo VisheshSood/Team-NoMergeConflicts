@@ -18,7 +18,7 @@ describe("the signup page", function(){
     });
 
     it('must have valid last name', function() {
-        var requiredMsg = element(by.className("validation-error"));
+        var requiredMsg = element(by.cssContainingText("validation-error", "Last name is required"));
 
         expect(requiredMsg.isPresent()).toEqual(false);
         lastName.sendKeys('abc');
