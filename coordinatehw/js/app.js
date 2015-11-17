@@ -35,12 +35,21 @@ angular.module("validationApp", [])
 
         $scope.getStrength = function(){
             var strength = 0;
-            if($scope.signup && $scope.signup.password && $scope.signup.password.length > 0){
+            if($scope.signup && $scope.signup.password){
+                strength = getStrengthValue($scope.signup.password);
+            }
+            $scope.passwordStrength = strength.toString();
+            var data = getStrengthWord(strength);
+            $scope.strengthWord = data.word;
+            $scope.strengthClass = data.class;
+        };
+        function getStrengthValue(word){
+            if(word.length > 0){
                 var variety = [0,0,0,0];
                 var index = 0;
                 /* get the variety of the password */
-                for(index; index < $scope.signup.password.length; index++){
-                    var currentChar = $scope.signup.password.charAt(index);
+                for(index; index < word.length; index++){
+                    var currentChar = word.charAt(index);
                     if(containsSpecial(currentChar)){
                         variety[3]++;
                     }
@@ -65,27 +74,22 @@ angular.module("validationApp", [])
                 var multiplier = 8;
                 var varietyMultipler = 100.0 / variety.length;
                 /* limit to the variety of the password */
-                strength = Math.min(everything * varietyMultipler, $scope.signup.password.length * multiplier);
+                return Math.min(everything * varietyMultipler, word.length * multiplier);
             }
-            $scope.passwordStrength = strength;
-            getStrengthWord(strength);
-        };
+            return 0;
+        }
         function getStrengthWord(str){
             if(str <= 25){
-                $scope.strengthWord = "Weak";
-                $scope.strengthClass = "progress-bar-danger"
+                return {word: "Weak", class: "progress-bar-danger"};
             }
             else if(str <= 50){
-                $scope.strengthWord = "Okay";
-                $scope.strengthClass = "progress-bar-warning"
+                return {word: "Okay", class: "progress-bar-warning"};
             }
             else if(str <= 75){
-                $scope.strengthWord = "Strong";
-                $scope.strengthClass = "progress-bar-info"
+                return {word: "Strong", class:"progress-bar-info"}
             }
             else {
-                $scope.strengthWord = "Really Strong!";
-                $scope.strengthClass = "progress-bar-success"
+                return {word: "Really Strong!", class:"progress-bar-success"}
             }
         }
         function containsSpecial(str){
