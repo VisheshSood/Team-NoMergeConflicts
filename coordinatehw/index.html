@@ -2,18 +2,18 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
         <title>Sign-Up Service</title>
+
         <!-- include bootstrap as a link so we can get the integrity hash -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+              integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+              crossorigin="anonymous">
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
-
         <script src="js/app.js"></script>
-
         <link rel="stylesheet" href="css/main.css">
     </head>
 
@@ -24,14 +24,27 @@
                 <p>Our service is fun and awesome, but you must be 13 years old to join.</p>
             </div>
 
-            <form id="submit" name="submit" novalidate>
+            <form novalidate id="submit" name="submit">
                 <div class="form-group">
-                    <label for="first-name">First Name:</label>
-                    <input type="text" class="form-control" id="first-name" placeholder="first name" ng-model="user.first_name"/>
+                    <label for="emailInp">Email</label>
+                    <input type="email" class="form-control" ng-model="user.email" name="emailInp" id="emailInp" required/>
+
+                    <p class="validation-error" id="invalidEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.email && !submit.emailInp.$error.required">Please enter a valid e-mail!</p>
+
+                    <p class="validation-error" id="emptyEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.required">Please enter an e-mail!</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName"
+                           placeholder="first name" ng-model="user.first_name"/>
                 </div>
                 <div class="form-group">
-                    <label for="last-name">Last Name:</label>
-                    <input type="text" class="form-control" id="last-name" placeholder="last name" ng-model="user.last_name"/>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="last name"
+                           ng-model="user.last_name" required/>
+                    <p class="validation-error" ng-if="submit.lastName.$error.required && submit.lastName.$dirty">
+                        Last name is required</p>
                 </div>
                 <div class="form-group">
                     <label for="birthdateInput">Birthdate:</label>
@@ -40,35 +53,38 @@
                     <p class="validation-error" ng-if="submit.birthdateInput.$error.pattern">Please enter your birthdate in the correct format (mm-dd-yyyy)</p>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="text" class="form-control" id="email" placeholder="email address" ng-model="user.email"/>
-                </div>
-                <div class="form-group">
                     <label for="passwordInput">Password:</label>
-                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" ng-model="signup.password" placeholder="Your password" ng-change="getStrength()" ng-style="" required>
+                    <input type="password" class="form-control" id="passwordInput" name="passwordInput"
+                           ng-model="user.password" placeholder="Your password" ng-change="getStrength()" ng-style="" required>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="passwordStrength" aria-valuemin="0" aria-valuemax="100" ng-style="{width: passwordStrength + '%'}" ng-class="strengthClass">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="passwordStrength" aria-valuemin="0"
+                             aria-valuemax="100" ng-style="{width: passwordStrength + '%'}" ng-class="strengthClass">
                             {{strengthWord}}
                         </div>
                     </div>
-                    <p class="validation-error" ng-if="submit.passwordInput.$error.required && submit.passwordInput.$dirty">Password is required</p>
+                    <p class="validation-error"
+                       ng-if="submit.passwordInput.$error.required && submit.passwordInput.$dirty">
+                        Password is required</p>
                 </div>
                 <div class="form-group">
                     <label for="passwordConfirmInput">Confirm password:</label>
-                    <input type="password" class="form-control" id="passwordConfirmInput" name="passwordConfirmInput" ng-model="signup.confirmPassword" placeholder="Confirm Password" compare-to="signup.password" required>
-                    <p class="validation-error" ng-if="submit.passwordConfirmInput.$error.required && submit.passwordConfirmInput.$dirty">Must confirm your password</p>
-                    <p class="validation-error" ng-if="submit.passwordConfirmInput.$error.compareTo && submit.passwordConfirmInput.$dirty">Passwords must match exactly</p>
+                    <input type="password" class="form-control" id="passwordConfirmInput"
+                           name="passwordConfirmInput" ng-model="user.confirmPassword" placeholder="Confirm Password"
+                           compare-to="user.password" required>
+                    <p class="validation-error"
+                       ng-if="submit.passwordConfirmInput.$error.required && submit.passwordConfirmInput.$dirty">
+                        Must confirm your password</p>
+                    <p class="validation-error"
+                       ng-if="submit.passwordConfirmInput.$error.compareTo && submit.passwordConfirmInput.$dirty">
+                        Passwords must match exactly</p>
                 </div>
                 <div class="form-group">
-                    <button ng-click="resetForm();" class="btn btn-default">
-                        Reset
-                    </button>
-                    <button class="btn btn-primary" ng-click="signUp();">
-                        Sign me up!
-                    </button>
+                    <button class="btn btn-default" type="button" ng-click="resetForm();">Reset</button>
+                    <button class="btn btn-primary" type="button" ng-click="signUp();">Sign me up!</button>
                 </div>
                 <div class="alert alert-success" ng-show="formSuccess" role="alert">Your sign up was successful!</div>
             </form>
         </div>
+
     </body>
 </html>
