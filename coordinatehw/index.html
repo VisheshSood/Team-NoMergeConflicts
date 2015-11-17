@@ -52,7 +52,7 @@
                 <div class="form-group">
                     <label for="passwordInput">Password:</label>
                     <input type="password" class="form-control" id="passwordInput" name="passwordInput"
-                           ng-model="signup.password" placeholder="Your password" ng-change="getStrength()" ng-style="" required>
+                           ng-model="user.password" placeholder="Your password" ng-change="getStrength()" ng-style="" required>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="passwordStrength" aria-valuemin="0"
                              aria-valuemax="100" ng-style="{width: passwordStrength + '%'}" ng-class="strengthClass">
@@ -66,8 +66,8 @@
                 <div class="form-group">
                     <label for="passwordConfirmInput">Confirm password:</label>
                     <input type="password" class="form-control" id="passwordConfirmInput"
-                           name="passwordConfirmInput" ng-model="signup.confirmPassword" placeholder="Confirm Password"
-                           compare-to="signup.password" required>
+                           name="passwordConfirmInput" ng-model="user.confirmPassword" placeholder="Confirm Password"
+                           compare-to="user.password" required>
                     <p class="validation-error"
                        ng-if="submit.passwordConfirmInput.$error.required && submit.passwordConfirmInput.$dirty">
                         Must confirm your password</p>
@@ -76,13 +76,8 @@
                         Passwords must match exactly</p>
                 </div>
                 <div class="form-group">
-
-                    <button ng-click="resetForm();" class="btn btn-default">
-                        Reset
-                    </button>
-                    <button class="btn btn-primary" ng-click="signUp();">
-                        Sign me up!
-                    </button>
+                    <button class="btn btn-default" type="button" ng-click="resetForm();">Reset</button>
+                    <button class="btn btn-primary" type="button" ng-click="signUp();">Sign me up!</button>
                 </div>
                 <div class="alert alert-success" ng-show="formSuccess" role="alert">Your sign up was successful!</div>
 
