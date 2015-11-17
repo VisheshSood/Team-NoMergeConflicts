@@ -9,40 +9,30 @@ describe("the signup page", function(){
     it('it has the correct header', function() {
         expect(browser.getTitle()).toEqual('Sign-Up Service');
     });
+
     
-    
-	it('should show that email is required', function() {
-        expect(requiredMessage.isPresent()).toEqual(false);
+    it('must show warnings for invalid emails', function() {
+        var emailInp = element(by.model('user.email')); 
+        var emailAlertReqd  = element(by.id('emptyEmailAlert'));
+        var emailAlertValid= element(by.id('invalidEmailAlert'));
+        
+        expect(emailAlertReqd.isPresent()).toEqual(false);
         emailInp.sendKeys('abc');
         emailInp.clear();
-        expect(requiredMessage.isPresent()).toEqual(true);
+        expect(emailAlertReqd.isPresent()).toEqual(true);
         emailInp.sendKeys('abc');
-        expect(requiredMessage.isPresent()).toEqual(false);
-    });
-
-    it('should show that email entered is invalid', function() {
-        expect(invalidEmailMessage.isPresent()).toEqual(false);
+        expect(emailAlertReqd.isPresent()).toEqual(false);
+        emailInp.clear();
+        expect(emailAlertValid.isPresent()).toEqual(false);
         emailInp.sendKeys('l0lgmailcom');
-        expect(invalidEmailMessage.isPresent()).toEqual(true);
+        expect(emailAlertValid.isPresent()).toEqual(true);
         emailInp.clear();
         emailInp.sendKeys('l0lgmail.com');
-        expect(invalidEmailMessage.isPresent()).toEqual(true);
+        expect(emailAlertValid.isPresent()).toEqual(true);
         emailInp.clear();
         emailInp.sendKeys('lolpleasew0rk@gmail.com');
-        expect(invalidEmailMessage.isPresent()).toEqual(false);
+        expect(emailAlertValid.isPresent()).toEqual(false);
         emailInp.clear();
-    });   
-	it('should show that email entered is invalid', function() {
-		expect(invalidEmailMessage.isPresent()).toEqual(false);
-		emailInp.sendKeys('l0lgmailcom');
-		expect(invalidEmailMessage.isPresent()).toEqual(true);
-		emailInp.clear();
-		emailInp.sendKeys('l0lgmail.com');
-		expect(invalidEmailMessage.isPresent()).toEqual(true);
-		emailInp.clear();
-		emailInp.sendKeys('lolpleasew0rk@gmail.com');
-		expect(invalidEmailMessage.isPresent()).toEqual(false);
-		emailInp.clear();
-	});   
+    })
 });
 
