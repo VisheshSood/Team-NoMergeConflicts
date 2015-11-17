@@ -99,7 +99,13 @@ describe("the signup page", function () {
     /* Tests related to the birthday field */
     
     it("should require a birthdate", function() {
-        checkRequired(birthdateInput, element(by.cssContainingText(".validation-error", "Please enter your birthdate in the correct format (mm-dd-yyyy)")));
+        var error = element(by.cssContainingText(".validation-error", "Please enter your birthdate in the correct format (mm-dd-yyyy)"));
+        expect(error.isPresent()).toEqual(false);
+        birthdateInput.sendKeys("08-28-1995");
+        birthdateInput.clear();
+        expect(error.isPresent()).toEqual(true);
+        birthdateInput.sendKeys("08-28-1995");
+        expect(error.isPresent()).toEqual(false);
     });
     
     it("should show an error if the user is under the age of 13", function() {
