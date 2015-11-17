@@ -2,6 +2,8 @@ describe("the signup page", function(){
 
     var passwordInput = element(by.model("signup.password"));
     var confirmPasswordInput = element(by.model("signup.confirmPassword"));
+    
+    var birthdateInput = element(by.model("user.birthdate"));
 
     beforeEach(function(){
         browser.get("http://localhost:8000");
@@ -34,45 +36,42 @@ describe("the signup page", function(){
         confirmPasswordInput.sendKeys("password");
         expect(error.isPresent()).toEqual(false);
     });
-
-    describe("password strength functions", function(){
-        beforeEach(module("validationApp"));
-        var $controller;
-        beforeEach(inject(function(_$controller_){
-            $controller = _$controller_;
-        }));
-        function checkStrength(password, toCheck, expected){
-            $scope.signup.password = password;
-            $scope.getStrength();
-            expect(toCheck).toEqual(expected);
-        }
-        it("should have capped strength when there is no variety", function() {
-            var $scope = {};
-            var controller = $controller('signupForm', { $scope: $scope });
-
-            checkStrength("thisisreallylongpasswordwithnovariety", $scope.passwordStrength, "25");
-            checkStrength("thisisreallylongpasswordwithnovarietyA", $scope.passwordStrength, "50");
-            checkStrength("thisisreallylongpasswordwithnovarietyA1", $scope.passwordStrength, "75");
-            checkStrength("thisisreallylongpasswordwithnovarietyA1!", $scope.passwordStrength, "100");
-        });
-        it("should increment by multiplier",function(){
-            /* maybe should be a global on scope, but don't like that */
-            var multiplier = 8;
-            checkStrength("a", $scope.passwordStrength, (multiplier).toString());
-            checkStrength("ab", $scope.passwordStrength, (multiplier*2).toString());
-            checkStrength("abc", $scope.passwordStrength, (multiplier*3).toString());
-        });
-        it("should give proper strength words", function(){
-            checkStrength("thisisreallylongpasswordwithnovariety", $scope.strengthWord, "Weak");
-            checkStrength("thisisreallylongpasswordwithnovarietyA", $scope.strengthWord, "Okay");
-            checkStrength("thisisreallylongpasswordwithnovarietyA1", $scope.strengthWord, "Strong");
-            checkStrength("thisisreallylongpasswordwithnovarietyA1!", $scope.strengthWord, "Really Strong!");
-        });
-        it("should give proper progress bar classes", function(){
-            checkStrength("thisisreallylongpasswordwithnovariety", $scope.strengthClass, "progress-bar-danger");
-            checkStrength("thisisreallylongpasswordwithnovarietyA", $scope.strengthClass, "progress-bar-warning");
-            checkStrength("thisisreallylongpasswordwithnovarietyA1", $scope.strengthClass, "progress-bar-info");
-            checkStrength("thisisreallylongpasswordwithnovarietyA1!", $scope.strengthClass, "progress-bar-success");
-        });
+    
+    /* Tests related to the birthday field */
+    
+    it("should require a birthdate", function() {
+        checkRequired(birthdateInput, element(by.class("validation-error")));
     });
+    
+    it("should show an error if the user is under the age of 13", function() {
+        var errorMsg = element(by.cssContainingText("You are not old enough to join! Try again later"))
+        
+        expect(errorMsg.isPresent()).toEqual(false);
+        birthdateInput.sendKeys('01-01-2011');
+        expect(errorMsg.isPresent()).toEqual(true);
+        birthdateInput.clear();
+        birthdateInput.sendKeys('08-28-1995');
+        expect(errorMsg.isPresent()).toEqual(false);
+    });
+    
+    it("show that the user has improper input formatting", function() {
+        var requiredMsg = element(by.cssContainingText("Please enter your birthdate in the correct format (mm-dd-yyyy)"))
+        
+        expect(requiredMsg.isPresent()).toEqual(false);
+        birthdateInput.sendKeys('30-08-2011');
+        expect(requiredMsg.isPresent()).toEqual(true);
+        birthdateInput.clear();
+        birthdateInput.sendKeys('11-11-1996');
+        expect(requiredMsg.isPresent()).toEqual(false);
+        birthdateInput.clear();
+        birthdateInput.sendKeys('08.28.1995');
+        expect(requiredMsg.isPresent()).toEqual(true);
+        birthdateInput.clear();
+        birthdateInput.sendKeys('03/13/2001');
+        expect(requiredMsg.isPresent()).toEqual(true);
+        birthdateInput.clear();
+        birthdateInput.sendKeys('07-27-1997');
+        expect(requiredMsg.isPresent()).toEqual(false);
+    });
+    
 });

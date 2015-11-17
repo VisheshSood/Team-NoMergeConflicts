@@ -1,5 +1,6 @@
 angular.module("validationApp", [])
     .directive("compareTo", function(){
+        console.log('cam');
         return {
             require: "ngModel",
             scope: {
@@ -16,6 +17,20 @@ angular.module("validationApp", [])
             }
         };
     })
+    .directive("validateBirthdate", function() {
+        console.log("testing");
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attributes, ngModel) {
+                ngModel.$validators.validateBirthdate = function(modelValue) {
+                    var birthday = Date.parse(modelValue);
+                    var age = ((Date.now() - birthday) / 31557600000);
+                    return(age > 13);
+                    
+                };
+            }
+        };
+    })   
     .controller("signupForm", function($scope){
         $scope.passwordStrength = "0";
         $scope.strengthClass = "progress-bar-danger";
