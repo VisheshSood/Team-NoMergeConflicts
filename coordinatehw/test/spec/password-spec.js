@@ -6,10 +6,10 @@ describe("password strength functions", function(){
     beforeEach(inject(function($controller, $rootScope){
         scope = $rootScope.$new();
         controller = $controller("signupForm", {$scope: scope});
-        scope.signup = {};
+        scope.user = {};
     }));
     function checkStrength(password, toCheck, expected){
-        scope.signup.password = password;
+        scope.user.password = password;
         scope.getStrength();
         expect(scope[toCheck]).toEqual(expected);
     }

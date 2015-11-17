@@ -16,7 +16,21 @@ angular.module("validationApp", [])
             }
         };
     })
-    .controller("signupForm", function ($scope) {
+    .directive("validateBirthdate", function() {
+        console.log("testing");
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attributes, ngModel) {
+                ngModel.$validators.validateBirthdate = function(modelValue) {
+                    var birthday = Date.parse(modelValue);
+                    var age = ((Date.now() - birthday) / 31557600000);
+                    return(age > 13);
+                    
+                };
+            }
+        };
+    })   
+    .controller("signupForm", function($scope){
         $scope.passwordStrength = "0";
         $scope.strengthClass = "progress-bar-danger";
         $scope.strengthWord = "Weak";

@@ -2,11 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
         <title>Sign-Up Service</title>
+
         <!-- include bootstrap as a link so we can get the integrity hash -->
         <link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
@@ -15,7 +14,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
         <script src="js/app.js"></script>
-
         <link rel="stylesheet" href="css/main.css">
     </head>
 
@@ -26,8 +24,15 @@
                 <p>Our service is fun and awesome, but you must be 13 years old to join.</p>
             </div>
 
-
             <form novalidate id="submit" name="submit">
+                <div class="form-group">
+                    <label for="emailInp">Email</label>
+                    <input type="email" class="form-control" ng-model="user.email" name="emailInp" id="emailInp" required/>
+
+                    <p class="validation-error" id="invalidEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.email && !submit.emailInp.$error.required">Please enter a valid e-mail!</p>
+
+                    <p class="validation-error" id="emptyEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.required">Please enter an e-mail!</p>
+                </div>
 
                 <div class="form-group">
                     <label for="firstName">First Name:</label>
@@ -42,13 +47,11 @@
                         Last name is required</p>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="email address"
-                           ng-model="user.email" required/>
+                    <label for="birthdateInput">Birthdate:</label>
+                    <input type="text" class="form-control" id="birthdateInput" name="birthdateInput" ng-model="user.birthdate" placeholder="your birthdate" validate-birthdate="user.birthdate" pattern="^((0?[1-9]|1[012])[-](0?[1-9]|[12][0-9]|3[01])[-](19|20)?[0-9]{2})*$" required>
+                    <p class="validation-error" ng-if="submit.birthdateInput.$error.validateBirthdate && submit.birthdateInput.$dirty">You are not old enough to join! Try again later</p>
+                    <p class="validation-error" ng-if="submit.birthdateInput.$error.pattern">Please enter your birthdate in the correct format (mm-dd-yyyy)</p>
                 </div>
-
-
-
                 <div class="form-group">
                     <label for="passwordInput">Password:</label>
                     <input type="password" class="form-control" id="passwordInput" name="passwordInput"
@@ -81,8 +84,8 @@
                             ng-disabled="submit.$invalid">Sign me up!</button>
                 </div>
                 <div class="alert alert-success" ng-show="formSuccess" role="alert">Your sign up was successful!</div>
-
             </form>
         </div>
+
     </body>
 </html>
