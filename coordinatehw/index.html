@@ -22,9 +22,9 @@
                     <label for="emailInp">Email</label>
                     <input type="email" class="form-control" ng-model="user.email" name="emailInp" id="emailInp" required/>
 
-                    <p class="validation-error" id="invalidEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.email && !submit.emailInp.$error.required">Please enter a valid e-mail</p>
+                    <p class="validation-error" id="invalidEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.email && !submit.emailInp.$error.required">Please enter a valid e-mail!</p>
 
-                    <p class="validation-error" id="emptyEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.required">Please enter an e-mail</p>
+                    <p class="validation-error" id="emptyEmailAlert" ng-if="submit.emailInp.$dirty && submit.emailInp.$error.required">Please enter an e-mail!</p>
                 </div>
 
             </form>
