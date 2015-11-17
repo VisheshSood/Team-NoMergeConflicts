@@ -21,9 +21,14 @@
                 <div class="form-group">
                     <label for="emailInp">Email</label>
                     <input type="email" class="form-control" ng-model="user.email" name="emailInp" id="emailInp" required/>
+
                     <p class="validation-error email-required"
-                       ng-if="submit.emailInp.$dirty && submit.emailInp.$error.required">
+                       ng-if="submit.emailInp.$error.required && submit.emailInp.$dirty">
                         An email address is required!
+                    </p>
+                    <p class="validation-error email-invalid-error"
+                       ng-if="submit.emailInp.$error.required && submit.emailInp.$error.email && submit.emailInp.$dirty">
+                        The email you provided is invalid!
                     </p>
                 </div>
 

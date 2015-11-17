@@ -7,10 +7,10 @@ describe("the signup page", function(){
     });
 
     it('it has the correct header', function() {
-        expect(browser.getTitle()).toEqual('Sign Up!');
+        expect(browser.getTitle()).toEqual('Sign-Up Service');
     });
-	
-	it('should show that email is required', function() {
+    
+    it('should show that email is required', function() {
         expect(requiredMessage.isPresent()).toEqual(false);
         emailInp.sendKeys('abc');
         emailInp.clear();
@@ -19,18 +19,18 @@ describe("the signup page", function(){
         expect(requiredMessage.isPresent()).toEqual(false);
     });
 
-	it('should show that email entered is invalid', function() {
-		expect(invalidEmailMessage.isPresent()).toEqual(false);
-		emailInp.sendKeys('l0lgmailcom');
-		expect(invalidEmailMessage.isPresent()).toEqual(true);
-		emailInp.clear();
-		emailInp.sendKeys('l0lgmail.com');
-		expect(invalidEmailMessage.isPresent()).toEqual(true);
-		emailInp.clear();
-		emailInp.sendKeys('lolpleasew0rk@gmail.com');
-		expect(invalidEmailMessage.isPresent()).toEqual(false);
-		emailInp.clear();
-	});   
+    it('should show that email entered is invalid', function() {
+        expect(invalidEmailMessage.isPresent()).toEqual(false);
+        emailInp.sendKeys('l0lgmailcom');
+        expect(invalidEmailMessage.isPresent()).toEqual(true);
+        emailInp.clear();
+        emailInp.sendKeys('l0lgmail.com');
+        expect(invalidEmailMessage.isPresent()).toEqual(true);
+        emailInp.clear();
+        emailInp.sendKeys('lolpleasew0rk@gmail.com');
+        expect(invalidEmailMessage.isPresent()).toEqual(false);
+        emailInp.clear();
+    });   
 
 });
 
