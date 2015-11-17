@@ -6,11 +6,9 @@ describe("the signup page", function () {
     var passwordInput = element(by.model("signup.password"));
     var confirmPasswordInput = element(by.model("signup.confirmPassword"));
 
-
     beforeEach(function () {
         browser.get("http://localhost:8000");
     });
-
 
     it('must clear all input boxes', function () {
         firstName.sendKeys("Sam");
@@ -36,7 +34,8 @@ describe("the signup page", function () {
         lastName.sendKeys('abc');
         expect(requiredMsg.isPresent()).toEqual(false);
 
-        function checkRequired(input, error) {
+
+        function checkRequired(input, error){
             expect(error.isPresent()).toEqual(false);
             input.sendKeys("testing input");
             input.clear();
@@ -45,16 +44,16 @@ describe("the signup page", function () {
             expect(error.isPresent()).toEqual(false);
         }
 
-        it("should require password", function () {
-            checkRequired(passwordInput, element(by.class("validation-error")));
+        it("should require password", function(){
+            checkRequired(passwordInput, element(by.cssContainingText(".validation-error","Password is required")));
         });
-        it("should require confirmed password", function () {
+        it("should require confirmed password", function(){
             /* match passwords before testing required */
             passwordInput.sendKeys("testing input");
-            checkRequired(confirmPasswordInput, element(by.class("validation-error")));
+            checkRequired(confirmPasswordInput, element(by.cssContainingText(".validation-error","Must confirm your password")));
         });
-        it("should make sure passwords match", function () {
-            var error = element(by.class("validation-error"));
+        it("should make sure passwords match",function(){
+            var error = element(by.cssContainingText(".validation-error","Passwords must match exactly"));
             expect(error.isPresent()).toEqual(false);
             passwordInput.sendKeys("password");
             confirmPasswordInput.sendKeys("not password");
@@ -62,6 +61,7 @@ describe("the signup page", function () {
             confirmPasswordInput.clear();
             confirmPasswordInput.sendKeys("password");
             expect(error.isPresent()).toEqual(false);
+
         });
 
         describe("password strength functions", function () {
@@ -105,5 +105,10 @@ describe("the signup page", function () {
                 checkStrength("thisisreallylongpasswordwithnovarietyA1!", $scope.strengthClass, "progress-bar-success");
             });
         });
-    });
+
+
+
+
+
+
 });
